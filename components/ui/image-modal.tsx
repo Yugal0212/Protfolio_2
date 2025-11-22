@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -87,19 +88,17 @@ export function ImageModal({ images, currentIndex, isOpen, onClose, title }: Ima
             )}
 
             {/* Main Image */}
-            <motion.img
-              key={activeIndex}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              src={images[activeIndex]}
-              alt={`${title} - Screenshot ${activeIndex + 1}`}
-              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-              onError={(e) => {
-                const target = e.currentTarget as HTMLImageElement
-                target.src = '/placeholder.jpg'
-              }}
-            />
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Image
+                key={activeIndex}
+                src={images[activeIndex]}
+                alt={`${title} - Screenshot ${activeIndex + 1}`}
+                width={1920}
+                height={1080}
+                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                priority
+              />
+            </div>
 
             {/* Image Title */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/50 text-white px-4 py-2 rounded-full text-sm max-w-md text-center">
@@ -117,14 +116,12 @@ export function ImageModal({ images, currentIndex, isOpen, onClose, title }: Ima
                       index === activeIndex ? 'border-white' : 'border-white/30 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img
+                    <Image
                       src={image}
                       alt={`Thumbnail ${index + 1}`}
+                      width={48}
+                      height={32}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.currentTarget as HTMLImageElement
-                        target.src = '/placeholder.jpg'
-                      }}
                     />
                   </button>
                 ))}

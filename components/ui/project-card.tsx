@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -19,29 +20,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Project Image */}
         <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden">
           {project.images && project.images.length > 0 ? (
-            <img 
+            <Image
               src={project.images[0]} 
               alt={project.title}
+              width={600}
+              height={400}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              onError={(e) => {
-                // Fallback to letter if image fails to load
-                e.currentTarget.style.display = 'none';
-                const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-                if (fallback) fallback.style.display = 'flex';
-              }}
             />
-          ) : null}
-          
-          {/* Fallback letter display */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-            <motion.div
-              className="text-4xl font-serif font-bold text-muted-foreground/50"
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              {project.title.charAt(0)}
-            </motion.div>
-          </div>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+              <motion.div
+                className="text-4xl font-serif font-bold text-muted-foreground/50"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                {project.title.charAt(0)}
+              </motion.div>
+            </div>
+          )}
 
           {/* Overlay on hover */}
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">

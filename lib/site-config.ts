@@ -47,7 +47,7 @@ export const siteConfig = {
       source: "https://github.com/Yugal0212/Chexay.io",
       description: "Secure authentication and responsive UI with presence and typing indicators.",
       tags: ["MERN", "Realtime", "Chat"],
-      images: ["../"],
+      images: [],
       featured: true,
     },
     {
@@ -71,7 +71,7 @@ export const siteConfig = {
       source: "https://github.com/Yugal0212",
       description: "Hackathon prototype for AI-assisted language learning.",
       tags: ["AI", "NLP"],
-      images: ["/images/masterpice"],
+      images: [],
       featured: false,
     },
   ],

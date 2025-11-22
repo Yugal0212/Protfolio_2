@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -80,10 +81,23 @@ export function FeaturedProjects() {
                     <div className="grid lg:grid-cols-2 gap-8 items-center">
                       {/* Project Image */}
                       <div className="relative">
-                        <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl flex items-center justify-center">
-                          <span className="text-4xl font-serif font-bold text-muted-foreground/50">
-                            {featuredProjects[currentIndex]?.title?.charAt(0) || "P"}
-                          </span>
+                        <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl overflow-hidden">
+                          {featuredProjects[currentIndex]?.images && featuredProjects[currentIndex]?.images[0] ? (
+                            <Image
+                              src={featuredProjects[currentIndex].images[0]}
+                              alt={featuredProjects[currentIndex].title}
+                              width={600}
+                              height={400}
+                              className="w-full h-full object-cover"
+                              priority
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="text-4xl font-serif font-bold text-muted-foreground/50">
+                                {featuredProjects[currentIndex]?.title?.charAt(0) || "P"}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
 
