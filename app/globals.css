@@ -1,0 +1,470 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  /* Enhanced color tokens with more vibrant and modern palette */
+  --background: oklch(0.99 0.005 264);
+  --foreground: oklch(0.12 0.02 264);
+  --card: oklch(0.98 0.01 264 / 0.85);
+  --card-foreground: oklch(0.12 0.02 264);
+  --popover: oklch(0.99 0.005 264 / 0.95);
+  --popover-foreground: oklch(0.12 0.02 264);
+  --primary: oklch(0.58 0.28 264);
+  --primary-foreground: oklch(0.99 0.005 264);
+  --secondary: oklch(0.68 0.22 300);
+  --secondary-foreground: oklch(0.99 0.005 264);
+  --muted: oklch(0.96 0.01 264);
+  --muted-foreground: oklch(0.42 0.02 264);
+  --accent: oklch(0.72 0.2 285);
+  --accent-foreground: oklch(0.99 0.005 264);
+  --destructive: oklch(0.62 0.28 15);
+  --destructive-foreground: oklch(0.99 0.005 264);
+  --border: oklch(0.88 0.01 264);
+  --input: oklch(0.97 0.005 264);
+  --ring: oklch(0.58 0.28 264 / 0.4);
+  --chart-1: oklch(0.58 0.28 264);
+  --chart-2: oklch(0.68 0.22 300);
+  --chart-3: oklch(0.72 0.2 285);
+  --chart-4: oklch(0.62 0.24 320);
+  --chart-5: oklch(0.68 0.26 240);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.98 0.01 264 / 0.9);
+  --sidebar-foreground: oklch(0.12 0.02 264);
+  --sidebar-primary: oklch(0.58 0.28 264);
+  --sidebar-primary-foreground: oklch(0.99 0.005 264);
+  --sidebar-accent: oklch(0.68 0.22 300);
+  --sidebar-accent-foreground: oklch(0.99 0.005 264);
+  --sidebar-border: oklch(0.88 0.01 264);
+  --sidebar-ring: oklch(0.58 0.28 264 / 0.4);
+}
+
+.dark {
+  /* Enhanced dark mode with deeper contrasts and more vibrant accents */
+  --background: oklch(0.08 0.01 264);
+  --foreground: oklch(0.95 0.01 264);
+  --card: oklch(0.12 0.015 264 / 0.8);
+  --card-foreground: oklch(0.95 0.01 264);
+  --popover: oklch(0.1 0.01 264 / 0.95);
+  --popover-foreground: oklch(0.95 0.01 264);
+  --primary: oklch(0.65 0.22 264);
+  --primary-foreground: oklch(0.08 0.01 264);
+  --secondary: oklch(0.75 0.18 300);
+  --secondary-foreground: oklch(0.08 0.01 264);
+  --muted: oklch(0.18 0.015 264);
+  --muted-foreground: oklch(0.65 0.01 264);
+  --accent: oklch(0.8 0.16 285);
+  --accent-foreground: oklch(0.08 0.01 264);
+  --destructive: oklch(0.7 0.22 15);
+  --destructive-foreground: oklch(0.95 0.01 264);
+  --border: oklch(0.2 0.015 264);
+  --input: oklch(0.15 0.015 264);
+  --ring: oklch(0.65 0.22 264 / 0.4);
+  --chart-1: oklch(0.65 0.22 264);
+  --chart-2: oklch(0.75 0.18 300);
+  --chart-3: oklch(0.8 0.16 285);
+  --chart-4: oklch(0.7 0.2 320);
+  --chart-5: oklch(0.75 0.22 240);
+  --sidebar: oklch(0.12 0.015 264 / 0.9);
+  --sidebar-foreground: oklch(0.95 0.01 264);
+  --sidebar-primary: oklch(0.65 0.22 264);
+  --sidebar-primary-foreground: oklch(0.08 0.01 264);
+  --sidebar-accent: oklch(0.75 0.18 300);
+  --sidebar-accent-foreground: oklch(0.08 0.01 264);
+  --sidebar-border: oklch(0.2 0.015 264);
+  --sidebar-ring: oklch(0.65 0.22 264 / 0.4);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Added custom font variables for Inter and Sora */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-sora);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Enhanced theme transitions and light mode background pattern */
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Added light mode specific background pattern */
+  body:not(.dark) {
+    background-image: radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--secondary) / 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, hsl(var(--accent) / 0.03) 0%, transparent 50%);
+  }
+
+  /* Enhanced glassmorphism effects with better light mode support */
+  .glass {
+    @apply backdrop-blur-xl border shadow-lg;
+    background: hsl(var(--card) / 0.7);
+    border-color: hsl(var(--border) / 0.4);
+  }
+
+  .glass-strong {
+    @apply backdrop-blur-2xl border shadow-xl;
+    background: hsl(var(--card) / 0.85);
+    border-color: hsl(var(--border) / 0.6);
+  }
+
+  /* Enhanced light mode specific glass effects */
+  body:not(.dark) .glass {
+    background: hsl(var(--card) / 0.8);
+    border-color: hsl(var(--border) / 0.5);
+    box-shadow: 0 8px 32px hsl(var(--primary) / 0.08), 0 4px 16px hsl(var(--secondary) / 0.06), inset 0 1px 0
+      hsl(var(--background) / 0.8);
+  }
+
+  body:not(.dark) .glass-strong {
+    background: hsl(var(--card) / 0.9);
+    border-color: hsl(var(--border) / 0.7);
+    box-shadow: 0 12px 40px hsl(var(--primary) / 0.12), 0 6px 20px hsl(var(--secondary) / 0.08), inset 0 1px 0
+      hsl(var(--background) / 0.9);
+  }
+
+  /* Enhanced modern gradient utilities */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+  }
+
+  /* Enhanced modern glow effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 40px hsl(var(--primary) / 0.1);
+  }
+
+  .glow-secondary {
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.3), 0 0 40px hsl(var(--secondary) / 0.1);
+  }
+
+  /* Enhanced light mode glow effects */
+  body:not(.dark) .glow-primary {
+    box-shadow: 0 0 25px hsl(var(--primary) / 0.4), 0 0 50px hsl(var(--primary) / 0.15), 0 0 75px
+      hsl(var(--secondary) / 0.1);
+  }
+
+  body:not(.dark) .glow-secondary {
+    box-shadow: 0 0 25px hsl(var(--secondary) / 0.4), 0 0 50px hsl(var(--secondary) / 0.15), 0 0 75px
+      hsl(var(--accent) / 0.1);
+  }
+
+  /* Enhanced scroll behavior with smooth animations */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Added custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
+  }
+
+  /* Added selection styling */
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Added professional shader-like background effects and animations */
+  .shader-bg {
+    background: radial-gradient(circle at 20% 80%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--secondary) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, hsl(var(--accent) / 0.05) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.3) 100%);
+  }
+
+  .dark .shader-bg {
+    background: radial-gradient(circle at 20% 80%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--secondary) / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, hsl(var(--accent) / 0.08) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.1) 100%);
+  }
+
+  /* Professional geometric patterns */
+  .geometric-pattern {
+    background-image: linear-gradient(
+        30deg,
+        hsl(var(--primary) / 0.02) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        hsl(var(--primary) / 0.02) 87.5%,
+        hsl(var(--primary) / 0.02)
+      ),
+      linear-gradient(
+        150deg,
+        hsl(var(--secondary) / 0.02) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        hsl(var(--secondary) / 0.02) 87.5%,
+        hsl(var(--secondary) / 0.02)
+      ),
+      linear-gradient(
+        30deg,
+        hsl(var(--accent) / 0.02) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        hsl(var(--accent) / 0.02) 87.5%,
+        hsl(var(--accent) / 0.02)
+      ),
+      linear-gradient(
+        150deg,
+        hsl(var(--primary) / 0.02) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        hsl(var(--primary) / 0.02) 87.5%,
+        hsl(var(--primary) / 0.02)
+      );
+    background-size: 80px 140px;
+  }
+}
+
+/* Added modern animation keyframes */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--secondary) / 0.2);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes mesh-gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes floating-orb {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(20px, -20px) rotate(90deg) scale(1.1);
+  }
+  50% {
+    transform: translate(-10px, -30px) rotate(180deg) scale(0.9);
+  }
+  75% {
+    transform: translate(-30px, 10px) rotate(270deg) scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Added new keyframes for animated background effects */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-30px) translateX(20px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-20px) translateX(-15px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-40px) translateX(10px) rotate(2deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(40px) translateX(-25px) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(25px) translateX(20px) rotate(5deg);
+  }
+  75% {
+    transform: translateY(35px) translateX(-10px) rotate(-3deg);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float-0 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+}
+
+@keyframes float-1 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-30px) translateX(-15px);
+  }
+}
+
+@keyframes float-2 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-25px) translateX(20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-mesh-gradient {
+  background-size: 400% 400%;
+  animation: mesh-gradient 8s ease-in-out infinite;
+}
+
+.animate-floating-orb {
+  animation: floating-orb 20s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Added new animation utility classes for background effects */
+.animate-float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 15s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 400% 400%;
+  animation: gradient-shift 10s ease-in-out infinite;
+}
