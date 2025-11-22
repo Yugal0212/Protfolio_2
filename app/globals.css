@@ -1,6 +1,25 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Performance optimizations for mobile */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hardware acceleration for better mobile performance */
+.glass,
+.glass-strong {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 :root {
   /* Enhanced color tokens with more vibrant and modern palette */
   --background: oklch(0.99 0.005 264);
@@ -449,6 +468,28 @@
   background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+}
+
+/* Disable heavy animations on mobile for better performance */
+@media (max-width: 768px) {
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-gradient,
+  .animate-mesh-gradient,
+  .animate-floating-orb,
+  .animate-float-slow,
+  .animate-float-reverse {
+    animation: none;
+  }
+  
+  /* Reduce blur on mobile for performance */
+  .blur-3xl {
+    filter: blur(40px);
+  }
+  
+  .blur-2xl {
+    filter: blur(24px);
+  }
 }
 
 /* Added new animation utility classes for background effects */

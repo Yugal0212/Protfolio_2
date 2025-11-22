@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { Menu, X, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -19,6 +19,8 @@ const navigation = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +28,25 @@ export function Header() {
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    if (isMobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [isMobileMenuOpen])
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
   }, [])
 
   return (
@@ -126,23 +147,24 @@ export function Header() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
+              ref={mobileMenuRef}
               initial={{ opacity: 0, height: 0, y: -20 }}
               animate={{ opacity: 1, height: "auto", y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeInOut" }}
               className="md:hidden border-t border-border/20 glass-strong rounded-b-2xl mt-2"
             >
               <div className="px-4 pt-4 pb-6 space-y-2">
                 {navigation.map((item, index) => (
                   <motion.div
                     key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: shouldReduceMotion ? 0 : index * 0.05 }}
                   >
                     <Link
                       href={item.href}
-                      className="block px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-xl transition-all duration-300"
+                      className="block px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-xl transition-all duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
@@ -150,15 +172,16 @@ export function Header() {
                   </motion.div>
                 ))}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: shouldReduceMotion ? 0 : 0.3 }}
                   className="pt-4"
                 >
                   <Button
                     asChild
                     size="sm"
-                    className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent shadow-lg transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-accent shadow-lg transition-all duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Link href="/contact" className="flex items-center justify-center space-x-2">
                       <span>Get In Touch</span>
