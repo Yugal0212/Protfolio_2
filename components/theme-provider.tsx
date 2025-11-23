@@ -27,8 +27,10 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ children, defaultTheme = "system", storageKey = "theme" }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const storedTheme = localStorage.getItem(storageKey) as Theme
     if (storedTheme) {
       setTheme(storedTheme)
@@ -36,17 +38,22 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
   }, [storageKey])
 
   useEffect(() => {
+    if (!mounted) return
+
     const root = window.document.documentElement
-    root.classList.remove("light", "dark")
 
     let effectiveTheme = theme
     if (theme === "system") {
       effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
     }
 
+    // Instant theme switching - no animations or transitions
+    root.classList.remove("light", "dark")
     root.classList.add(effectiveTheme)
+    root.style.colorScheme = effectiveTheme
+    
     localStorage.setItem(storageKey, theme)
-  }, [theme, storageKey])
+  }, [theme, mounted, storageKey])
 
   const value = {
     theme,

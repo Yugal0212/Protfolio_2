@@ -20,6 +20,55 @@
   backface-visibility: hidden;
 }
 
+/* Mobile-specific theme switching optimizations */
+@media (max-width: 768px) {
+  /* Disable View Transitions on mobile for better performance */
+  @view-transition {
+    navigation: auto;
+  }
+  
+  /* Instant theme switching on mobile - no transitions */
+  html,
+  body,
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+  
+  /* Only minimal transitions for interactive elements */
+  button,
+  [role="button"],
+  .btn {
+    transition: transform 0.02s ease-out !important;
+  }
+  
+  /* Optimize theme toggle button for touch */
+  [data-theme-toggle] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Reduce motion for better battery life */
+  .motion-reduce-on-mobile {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Remove backdrop blur on mobile only - replace with solid background */
+  .backdrop-blur-xl,
+  .backdrop-blur-lg,
+  .backdrop-blur-md {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: hsl(var(--background) / 0.85);
+  }
+}
+
 :root {
   /* Enhanced color tokens with more vibrant and modern palette */
   --background: oklch(0.99 0.005 264);
@@ -141,10 +190,48 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  /* Instant theme transitions - optimized for performance */
+  html {
+    transition: none;
+  }
+  
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    /* Enhanced theme transitions and light mode background pattern */
-    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Ultra-fast color transitions for instant theme switching */
+  *,
+  *::before,
+  *::after {
+    transition: 
+      background-color 0.05s ease-out,
+      border-color 0.03s ease-out,
+      color 0.03s ease-out,
+      fill 0.03s ease-out,
+      stroke 0.03s ease-out,
+      box-shadow 0.05s ease-out;
+  }
+  
+  /* Exclude transforms and opacity from theme transitions */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  }
+  
+  /* Mobile-first instant transitions */
+  @media (max-width: 768px) {
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
+    
+    /* Only transition essential interactive elements on mobile */
+    .btn,
+    button,
+    [role="button"] {
+      transition: background-color 0.02s ease-out !important;
+    }
   }
 
   /* Added light mode specific background pattern */
@@ -156,15 +243,19 @@
 
   /* Enhanced glassmorphism effects with better light mode support */
   .glass {
-    @apply backdrop-blur-xl border shadow-lg;
     background: hsl(var(--card) / 0.7);
-    border-color: hsl(var(--border) / 0.4);
+    border: 1px solid hsl(var(--border) / 0.4);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
   }
 
   .glass-strong {
-    @apply backdrop-blur-2xl border shadow-xl;
     background: hsl(var(--card) / 0.85);
-    border-color: hsl(var(--border) / 0.6);
+    border: 1px solid hsl(var(--border) / 0.6);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 20px -10px rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
   }
 
   /* Enhanced light mode specific glass effects */
@@ -180,6 +271,29 @@
     border-color: hsl(var(--border) / 0.7);
     box-shadow: 0 12px 40px hsl(var(--primary) / 0.12), 0 6px 20px hsl(var(--secondary) / 0.08), inset 0 1px 0
       hsl(var(--background) / 0.9);
+  }
+
+  /* Stats/Dashboard card specific styling */
+  .stats-card,
+  [data-stats-card],
+  .dashboard-card,
+  [data-dashboard-card] {
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    background: hsl(var(--card) / 0.8) !important;
+  }
+
+  /* Skills cards with white borders (like Languages, Frontend) */
+  .skills-card,
+  [data-skills-card],
+  .skill-category,
+  [data-skill-category],
+  .languages-card,
+  .frontend-card,
+  .backend-card,
+  .tools-card {
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 16px !important;
+    background: hsl(var(--card) / 0.8) !important;
   }
 
   /* Enhanced modern gradient utilities */
@@ -479,16 +593,131 @@
   .animate-floating-orb,
   .animate-float-slow,
   .animate-float-reverse {
-    animation: none;
+    animation: none !important;
   }
   
-  /* Reduce blur on mobile for performance */
+  /* Keep essential blur effects on mobile for visual consistency */
   .blur-3xl {
-    filter: blur(40px);
+    filter: blur(15px);
   }
   
   .blur-2xl {
-    filter: blur(24px);
+    filter: blur(10px);
+  }
+  
+  .blur-xl {
+    filter: blur(8px);
+  }
+  
+  .blur-lg {
+    filter: blur(6px);
+  }
+  
+  .blur-md {
+    filter: blur(4px);
+  }
+  
+  /* Mobile glass effects - subtle borders for component visibility */
+  .glass {
+    background: hsl(var(--card) / 0.9);
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  
+  .glass-strong {
+    background: hsl(var(--card) / 0.95);
+    border: 1px solid hsl(var(--border) / 0.6);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 6px 15px rgba(0, 0, 0, 0.12);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+  
+  /* All specified cards get highly visible white borders on mobile only */
+  
+  /* Achievement section cards */
+  .achievement-card,
+  [data-achievement-card],
+  .achievements-card,
+  [data-achievements-card],
+  
+  /* Project section cards */
+  .project-card,
+  [data-project-card],
+  .project-item,
+  [data-project-item],
+  
+  /* Home page cards (coding stats, fun facts) */
+  .stats-card,
+  [data-stats-card],
+  .fun-facts-card,
+  [data-fun-facts-card],
+  .coding-stats,
+  [data-coding-stats],
+  .stat-item,
+  [data-stat-item],
+  .stats-grid > *,
+  .statistics-card,
+  [data-statistics-card],
+  
+  /* About section cards (values, journey) */
+  .about-card,
+  [data-about-card],
+  .values-card,
+  [data-values-card],
+  .journey-card,
+  [data-journey-card],
+  .my-journey,
+  [data-my-journey],
+  
+  /* Skills cards */
+  .skills-card,
+  [data-skills-card],
+  .skill-category,
+  [data-skill-category],
+  .languages-card,
+  .frontend-card,
+  .backend-card,
+  .tools-card,
+  
+  /* Toolbox cards */
+  .toolbox-card,
+  [data-toolbox-card],
+  .my-toolbox,
+  [data-my-toolbox],
+  .tool-card,
+  [data-tool-card],
+  
+  /* Contact page cards (Send message, Get in Touch, Find me online) */
+  .contact-card,
+  [data-contact-card],
+  .contact-form-card,
+  [data-contact-form-card],
+  .get-in-touch-card,
+  [data-get-in-touch-card],
+  .find-me-online-card,
+  [data-find-me-online-card],
+  .contact-info-card,
+  [data-contact-info-card],
+  .social-links-card,
+  [data-social-links-card] {
+    border: 3px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 16px !important;
+    box-shadow: 
+      0 0 0 1px rgba(255, 255, 255, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    background: hsl(var(--card) / 0.95) !important;
+  }
+  
+  /* Optimize theme toggle for instant switching */
+  [data-theme-toggle] {
+    transition: transform 0.02s ease-out !important;
+  }
+  
+  [data-theme-toggle]:active {
+    transform: scale(0.95) !important;
   }
 }
 

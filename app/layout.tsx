@@ -1,6 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Sora } from "next/font/google"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { CommandPalette } from "@/components/global/command-palette"
 import { AnimatedBackground } from "@/components/global/animated-background"
@@ -97,15 +99,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const isProduction = process.env.NODE_ENV === 'production'
+  
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="yugal-portfolio-theme">
+        <ThemeProvider defaultTheme="system" storageKey="yugal-portfolio-theme">
           <AnimatedBackground />
           {children}
           <Footer />
           <CommandPalette />
           <Toaster />
+          {isProduction && <Analytics />}
+          {isProduction && <SpeedInsights />}
         </ThemeProvider>
       </body>
     </html>

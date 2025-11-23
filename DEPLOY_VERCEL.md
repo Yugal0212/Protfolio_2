@@ -33,6 +33,47 @@ Notes and tips
 - If you change build settings, update them in the Vercel project settings in the dashboard.
 - For custom domains, add them in the Vercel project settings and follow the DNS instructions.
 
+## Free Vercel Analytics & Monitoring
+
+Your portfolio includes **free** Vercel Analytics and Speed Insights to track users and performance:
+
+### What You Get for Free:
+1. **Analytics** (tracks user behavior)
+   - Page views and visits
+   - Top pages by traffic
+   - Referrer sources (where users come from)
+   - Unique visitors count
+   - Real-time data
+
+2. **Speed Insights** (performance monitoring)
+   - Real User Monitoring (RUM) scores
+   - Core Web Vitals (LCP, FID, CLS)
+   - Performance scores per page
+   - Mobile vs Desktop performance
+   - Geographic performance data
+
+### How to Access Analytics:
+1. Go to https://vercel.com/dashboard
+2. Select your deployed project
+3. Click the **Analytics** tab to see:
+   - Total page views
+   - Unique visitors
+   - Top pages
+   - Traffic sources
+   - Geographic distribution
+4. Click the **Speed Insights** tab to see:
+   - Performance scores
+   - Core Web Vitals
+   - Page load times
+   - Recommendations
+
+### Free Tier Limits:
+- Analytics: Up to 100k events/month (enough for most portfolios)
+- Speed Insights: Unlimited real user monitoring
+- Both features are **completely free** on Vercel's Hobby plan
+
+The analytics are already installed in your app (`app/layout.tsx`) and will start tracking automatically once deployed!
+
 Troubleshooting
 - Build errors: open the Vercel build logs and check the reported errors. Run `npm run build` locally to reproduce issues.
 - Missing static files: ensure files are inside the `public/` folder and committed to the repo.

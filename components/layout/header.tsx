@@ -33,7 +33,12 @@ export function Header() {
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+      const target = event.target as HTMLElement
+      // Don't close if clicking the menu button itself
+      if (target.closest('[data-mobile-menu-button]')) {
+        return
+      }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
         setIsMobileMenuOpen(false)
       }
     }
@@ -113,6 +118,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
+                data-mobile-menu-button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-border/50 backdrop-blur-sm hover:from-primary/20 hover:to-secondary/20 transition-all duration-300"
               >
