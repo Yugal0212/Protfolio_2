@@ -99,8 +99,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const isProduction = process.env.NODE_ENV === 'production'
-  
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased">
@@ -110,8 +108,8 @@ export default function RootLayout({
           <Footer />
           <CommandPalette />
           <Toaster />
-          {isProduction && <Analytics />}
-          {isProduction && <SpeedInsights />}
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
