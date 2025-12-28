@@ -41,24 +41,43 @@ export function ContactForm() {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
 
+    // Name validation
     if (!formData.name.trim()) {
       newErrors.name = "Name is required"
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters"
     }
 
+    // Enhanced email validation
     if (!formData.email.trim()) {
       newErrors.email = "Email is required"
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
+    } else {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+      const emailLower = formData.email.toLowerCase()
+      
+      if (!emailRegex.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address"
+      } else if (emailLower.includes('..') || emailLower.startsWith('.') || emailLower.endsWith('.')) {
+        newErrors.email = "Invalid email format detected"
+      } else if (!emailLower.includes('.')) {
+        newErrors.email = "Email must contain a domain (e.g., @example.com)"
+      }
     }
 
+    // Subject validation
     if (!formData.subject.trim()) {
       newErrors.subject = "Subject is required"
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = "Subject must be at least 3 characters"
     }
 
+    // Message validation
     if (!formData.message.trim()) {
       newErrors.message = "Message is required"
     } else if (formData.message.trim().length < 10) {
       newErrors.message = "Message must be at least 10 characters long"
+    } else if (formData.message.trim().length > 2000) {
+      newErrors.message = "Message must be less than 2000 characters"
     }
 
     setErrors(newErrors)
@@ -96,8 +115,8 @@ export function ContactForm() {
       }
 
       toast({
-        title: "Message Sent!",
-        description: result.message || "Thank you for your message. I'll get back to you soon!",
+        title: "✅ Message Sent Successfully!",
+        description: result.message || "Thank you for your message! Check your email for confirmation. I'll respond within 24-48 hours.",
       })
 
       // Reset form
