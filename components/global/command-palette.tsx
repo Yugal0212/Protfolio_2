@@ -28,6 +28,7 @@ interface CommandPaletteItem {
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -40,6 +41,31 @@ export function CommandPalette() {
 
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
+  }, [])
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+    
+    const toggleVisibility = () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      
+      timeoutId = setTimeout(() => {
+        // Show button when scrolled down at least 400px
+        if (window.scrollY > 400) {
+          setIsVisible(true)
+        } else {
+          setIsVisible(false)
+        }
+      }, 100)
+    }
+
+    toggleVisibility()
+    window.addEventListener("scroll", toggleVisibility, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", toggleVisibility)
+      if (timeoutId) clearTimeout(timeoutId)
+    }
   }, [])
 
   const commands: CommandPaletteItem[] = [
@@ -137,13 +163,22 @@ export function CommandPalette() {
 
   return (
     <>
-      {/* Trigger Button */}
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group hover:scale-110"
+      {/* Trigger Button - Only visible on scroll */}
+      <div
+        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ease-out ${
+          isVisible 
+            ? "translate-y-0 opacity-100 scale-100" 
+            : "translate-y-20 opacity-0 scale-75 pointer-events-none"
+        }`}
       >
-        <Search className="h-5 w-5 group-hover:scale-110 transition-transform" />
-      </button>
+        <button
+          onClick={() => setOpen(true)}
+          className="w-14 h-14 bg-gradient-to-br from-primary via-primary/90 to-secondary text-primary-foreground rounded-full shadow-2xl hover:shadow-primary/50 hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center group border-2 border-background/20 backdrop-blur-md will-change-transform"
+          aria-label="Open search"
+        >
+          <Search className="h-6 w-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-200" />
+        </button>
+      </div>
 
       {/* Command Dialog */}
       <CommandDialog open={open} onOpenChange={setOpen}>
